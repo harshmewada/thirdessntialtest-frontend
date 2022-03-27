@@ -2,7 +2,6 @@ import React from "react";
 import makeStyles from "@mui/styles/makeStyles";
 import {
   Alert,
-  Box,
   Button,
   Card,
   CardContent,
@@ -36,7 +35,6 @@ const Login = () => {
     handleSubmit,
     control,
     formState: { errors },
-    reset,
   } = useForm({
     defaultValues: {
       email: "abc@gmail.com",
@@ -48,7 +46,9 @@ const Login = () => {
     dispatch(loginUser(data));
   };
   React.useEffect(() => {
-    history.push("/");
+    if (isLogged) {
+      history.push("/");
+    }
   }, [isLogged]);
 
   const onRegister = (data) => {

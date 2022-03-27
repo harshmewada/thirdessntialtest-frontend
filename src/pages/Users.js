@@ -34,7 +34,7 @@ const Users = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.common);
-  const { open, modalData, openModal, closeModal, setModalData } = useModal();
+  const { open, modalData, openModal, closeModal } = useModal();
   const methods = useForm({
     defaultValues: {
       role: "user",
@@ -96,6 +96,7 @@ const Users = (props) => {
       field: "products",
       headerName: "Products",
       renderCell: ({ row }) => {
+        console.log("products", row);
         return row?.products?.length || 0;
       },
 
@@ -133,7 +134,7 @@ const Users = (props) => {
               <IconButton
                 color="primary"
                 onClick={() => {
-                  history.push(`/useractivity/${row.id}`);
+                  history.push(`/useractivity/${row?.id || row?._id}`);
                 }}
               >
                 <BarChart />
@@ -166,7 +167,7 @@ const Users = (props) => {
             rows={users || []}
             columns={tableHeaders}
             loading={isLoading}
-            getRowId={(row) => row._id}
+            getRowId={(row) => row._id || row.id}
           />
         </div>
       </Stack>

@@ -34,7 +34,7 @@ const Products = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.common);
-  const { open, modalData, openModal, closeModal, setModalData } = useModal();
+  const { open, modalData, openModal, closeModal } = useModal();
   const methods = useForm({});
   const isLoading = useSelector((state) => state.util.spinner);
 
@@ -100,6 +100,7 @@ const Products = (props) => {
               height: 40,
               width: 40,
             }}
+            alt={row?.productName}
           />
         );
       },
@@ -162,6 +163,7 @@ const Products = (props) => {
             rows={products || []}
             columns={tableHeaders}
             loading={isLoading}
+            getRowId={(row) => row._id || row.id}
           />
         </div>
       </Stack>

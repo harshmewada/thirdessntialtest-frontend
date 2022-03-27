@@ -67,7 +67,7 @@ const userReducer = (state = initialstate, action) => {
         isLoading: false,
       };
 
-    case authTypes.LOGOUT_USER:
+    case authTypes.LOGOUT_USER_SUCCESS:
       removeToken();
       return initialstate;
 

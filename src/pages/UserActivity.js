@@ -2,17 +2,10 @@ import React from "react";
 import { makeStyles } from "@mui/styles";
 import PageTitle from "../components/PageTtitle";
 import { useParams } from "react-router-dom";
-import {
-  Alert,
-  Card,
-  CardContent,
-  CircularProgress,
-  Stack,
-} from "@mui/material";
+import { Alert, CircularProgress, Stack } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { getActivity } from "../redux/action/userActions";
 import { DataGrid } from "@mui/x-data-grid";
-import { Box } from "@mui/system";
 import InfoCard from "../components/InfoCard";
 import formatDate from "../helpers/formatDate";
 const useStyles = makeStyles((theme) => ({
@@ -43,9 +36,15 @@ const UserActivity = (props) => {
   React.useEffect(() => {
     if (id) {
       dispatch(
-        getActivity(id, (res) => {
-          setData({ ...data, ...res.data.data });
-        })
+        getActivity(
+          id,
+          (res) => {
+            setData({ ...data, ...res.data.data });
+          },
+          () => {
+            setError(true);
+          }
+        )
       );
     }
   }, [id]);
@@ -73,6 +72,7 @@ const UserActivity = (props) => {
               rows={data?.activity || []}
               columns={tableHeaders}
               loading={isLoading}
+              getRowId={(row) => row._id || row.id}
             />
           </div>
         </Stack>
